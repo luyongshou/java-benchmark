@@ -30,13 +30,20 @@ public class SerJsoniter {
     private ByteArrayOutputStream byteArrayOutputStream;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) {
+    public void benchSetup(BenchmarkParams params) throws IOException {
         //JsonIterator.enableAnnotationSupport();
         JsonStream.setMode(EncodingMode.DYNAMIC_MODE);
         JsonIterator.setMode(DecodingMode.DYNAMIC_MODE_AND_MATCH_FIELD_WITH_HASH);
         testObject = TestObject.createTestObject();
         stream = new JsonStream(null, 512);
         byteArrayOutputStream = new ByteArrayOutputStream();
+
+        byteArrayOutputStream.reset();
+        stream.reset(byteArrayOutputStream);
+        stream.writeVal(testObject);
+        stream.flush();
+
+        System.out.println("length=" + TestObject.createTestJSON().length);
     }
 
     @Benchmark

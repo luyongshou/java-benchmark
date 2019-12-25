@@ -49,7 +49,7 @@
         <dependency>
             <groupId>com.jsoniter</groupId>
             <artifactId>jsoniter</artifactId>
-            <version>0.9.16-SNAPSHOT</version>
+            <version>0.9.23</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
@@ -105,6 +105,12 @@
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
             <version>3.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.edap</groupId>
+            <artifactId>edapx-protobuf</artifactId>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
