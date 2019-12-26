@@ -12,4 +12,12 @@ public class All {
             classpath.append(url.getPath()).append(File.pathSeparator);
         System.setProperty("java.class.path", classpath.toString());
     }
+
+    public static String conver2HexStr(byte[] b) {
+        StringBuffer result = new StringBuffer();
+        for (int i = 0; i < b.length; i++) {
+            result.append(Long.toString(b[i] & 0xff, 16) + ",");
+        }
+        return result.toString().substring(0, result.length() - 1);
+    }
 }

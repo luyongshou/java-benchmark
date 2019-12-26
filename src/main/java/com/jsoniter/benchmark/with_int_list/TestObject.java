@@ -17,9 +17,6 @@ public class TestObject {
     public static TestObject createTestObject() {
         TestObject testObject = new TestObject();
         testObject.field1 = Arrays.asList(
-                321, 123, 132, 312,
-                321, 123, 132, 312,
-                321, 123, 132, 312,
                 321, 123, 132, 312);
         return testObject;
     }

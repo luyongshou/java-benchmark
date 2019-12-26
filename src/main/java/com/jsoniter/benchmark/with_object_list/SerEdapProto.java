@@ -12,6 +12,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static com.jsoniter.benchmark.All.conver2HexStr;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -28,6 +29,9 @@ public class SerEdapProto {
         testObject = TestObject.createTestObject();
         byte[] bs = ProtoBuf.toByteArray(testObject);
         System.out.println("length=" + bs.length);
+        System.out.println("+-----------------------------------------------+");
+        System.out.println(conver2HexStr(bs));
+        System.out.println("+-----------------------------------------------+");
     }
 
     @Benchmark
