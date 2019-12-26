@@ -24,29 +24,31 @@ public class SerPb {
     private ByteArrayOutputStream byteArrayOutputStream;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) {
+    public void benchSetup(BenchmarkParams params) throws IOException {
         testObject = Pb.PbTestObject.newBuilder()
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("1").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("2").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("3").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("4").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("1234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("2234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("3234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("4234").build())
 
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("1").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("2").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("3").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("4").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("1234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("2234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("3234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("4234").build())
 
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("1").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("2").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("3").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("4").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("1234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("2234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("3234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("4234").build())
 
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("1").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("2").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("3").build())
-                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("4").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("1234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("2234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("3234").build())
+                .addField1(Pb.PbTestObject.ElementObject.newBuilder().setField1("4234").build())
                 .build();
         byteArrayOutputStream = new ByteArrayOutputStream();
+        testObject.writeTo(byteArrayOutputStream);
+        System.out.println("length=" + byteArrayOutputStream.size());
     }
 
     @Benchmark

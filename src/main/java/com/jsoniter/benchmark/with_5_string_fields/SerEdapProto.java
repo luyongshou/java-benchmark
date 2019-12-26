@@ -1,6 +1,7 @@
-package com.jsoniter.benchmark.with_int_list;
+package com.jsoniter.benchmark.with_5_string_fields;
 
 import com.jsoniter.benchmark.All;
+import com.jsoniter.benchmark.with_1_string_field.TestObject;
 import io.edap.x.protobuf.ProtoBuf;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
@@ -26,8 +27,6 @@ public class SerEdapProto {
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
-        byte[] bs = ProtoBuf.toByteArray(testObject);
-        System.out.println("length=" + bs.length);
     }
 
     @Benchmark
@@ -48,7 +47,7 @@ public class SerEdapProto {
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "with_int_list.SerEdapProto",
+                "with_1_string_field.SerEdapProto",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",

@@ -1,4 +1,4 @@
-package com.jsoniter.benchmark.with_int_list;
+package com.jsoniter.benchmark.with_int;
 
 import com.jsoniter.benchmark.All;
 import io.edap.x.protobuf.ProtoBuf;
@@ -26,8 +26,6 @@ public class SerEdapProto {
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
-        byte[] bs = ProtoBuf.toByteArray(testObject);
-        System.out.println("length=" + bs.length);
     }
 
     @Benchmark
@@ -48,7 +46,7 @@ public class SerEdapProto {
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "with_int_list.SerEdapProto",
+                "with_int.SerEdapProto",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",

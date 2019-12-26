@@ -1,4 +1,4 @@
-package com.jsoniter.benchmark.with_int_list;
+package com.jsoniter.benchmark.with_int;
 
 import com.jsoniter.JsonIterator;
 import com.jsoniter.benchmark.All;
@@ -30,17 +30,13 @@ public class SerJsoniter {
     private ByteArrayOutputStream byteArrayOutputStream;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) throws IOException {
+    public void benchSetup(BenchmarkParams params) {
 //        JsonIterator.enableAnnotationSupport();
         JsonStream.setMode(EncodingMode.DYNAMIC_MODE);
         JsonIterator.setMode(DecodingMode.DYNAMIC_MODE_AND_MATCH_FIELD_WITH_HASH);
         testObject = TestObject.createTestObject();
         stream = new JsonStream(null, 512);
         byteArrayOutputStream = new ByteArrayOutputStream();
-        stream.reset(byteArrayOutputStream);
-        stream.writeVal(testObject);
-        stream.flush();
-        System.out.println("length=" + byteArrayOutputStream.size());
     }
 
     @Benchmark
@@ -70,7 +66,7 @@ public class SerJsoniter {
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "with_int_list.SerJsoniter",
+                "with_int.SerJsoniter",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",
