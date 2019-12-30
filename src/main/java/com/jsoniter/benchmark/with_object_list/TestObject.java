@@ -16,25 +16,25 @@ public class TestObject {
     public static TestObject createTestObject() {
         TestObject testObject = new TestObject();
         testObject.field1 = new ArrayList<>();
-        testObject.field1.add(createElement("1234"));
-        testObject.field1.add(createElement("2234"));
-        testObject.field1.add(createElement("3234"));
-        testObject.field1.add(createElement("4234"));
+        testObject.field1.add(createElement("1"));
+        testObject.field1.add(createElement("2"));
+        testObject.field1.add(createElement("3"));
+        testObject.field1.add(createElement("4"));
 
-        testObject.field1.add(createElement("1234"));
-        testObject.field1.add(createElement("2234"));
-        testObject.field1.add(createElement("3234"));
-        testObject.field1.add(createElement("4234"));
+        testObject.field1.add(createElement("1"));
+        testObject.field1.add(createElement("2"));
+        testObject.field1.add(createElement("3"));
+        testObject.field1.add(createElement("4"));
 
-        testObject.field1.add(createElement("1234"));
-        testObject.field1.add(createElement("2234"));
-        testObject.field1.add(createElement("3234"));
-        testObject.field1.add(createElement("4234"));
+        testObject.field1.add(createElement("1"));
+        testObject.field1.add(createElement("2"));
+        testObject.field1.add(createElement("3"));
+        testObject.field1.add(createElement("4"));
 
-        testObject.field1.add(createElement("1234"));
-        testObject.field1.add(createElement("2234"));
-        testObject.field1.add(createElement("3234"));
-        testObject.field1.add(createElement("4234"));
+        testObject.field1.add(createElement("1"));
+        testObject.field1.add(createElement("2"));
+        testObject.field1.add(createElement("3"));
+        testObject.field1.add(createElement("4"));
         return testObject;
     }
 

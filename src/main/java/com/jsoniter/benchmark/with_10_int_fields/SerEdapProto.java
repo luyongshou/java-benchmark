@@ -1,7 +1,6 @@
 package com.jsoniter.benchmark.with_10_int_fields;
 
 import com.jsoniter.benchmark.All;
-import com.jsoniter.benchmark.with_1_string_field.TestObject;
 import io.edap.x.protobuf.ProtoBuf;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
@@ -13,6 +12,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static com.jsoniter.benchmark.All.conver2HexStr;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -27,6 +27,11 @@ public class SerEdapProto {
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
+        byte[] bs = ProtoBuf.toByteArray(testObject);
+        System.out.println("length=" + bs.length);
+        System.out.println("+-----------------------------------------------+");
+        System.out.println(conver2HexStr(bs));
+        System.out.println("+-----------------------------------------------+");
     }
 
     @Benchmark

@@ -13,6 +13,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static com.jsoniter.benchmark.All.conver2HexStr;
+
 /*
 Benchmark  Mode  Cnt       Score      Error  Units
 SerPb.ser  avgt    5  127933.179 ± 3502.340  ns/op
@@ -24,7 +26,7 @@ public class SerPb {
     private ByteArrayOutputStream byteArrayOutputStream;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) {
+    public void benchSetup(BenchmarkParams params) throws IOException {
         testObject = PbTestObect.PbTestObject.newBuilder()
                 .setField1("1")
                 .setField2("2")
@@ -33,6 +35,13 @@ public class SerPb {
                 .setField5("5")
                 .build();
         byteArrayOutputStream = new ByteArrayOutputStream();
+        byteArrayOutputStream.reset();
+        testObject.writeTo(byteArrayOutputStream);
+        byte[] bs = byteArrayOutputStream.toByteArray();
+        System.out.println("length=" + bs.length);
+        System.out.println("+-----------------------------------------------+");
+        System.out.println(conver2HexStr(bs));
+        System.out.println("+-----------------------------------------------+");
     }
 
     @Benchmark

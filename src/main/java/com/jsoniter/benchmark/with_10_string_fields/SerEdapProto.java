@@ -1,4 +1,4 @@
-package com.jsoniter.benchmark.with_5_string_fields;
+package com.jsoniter.benchmark.with_10_string_fields;
 
 import com.jsoniter.benchmark.All;
 import io.edap.x.protobuf.ProtoBuf;
@@ -52,7 +52,7 @@ public class SerEdapProto {
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "with_5_string_fields.SerEdapProto",
+                "with_10_string_fields.SerEdapProto",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",
