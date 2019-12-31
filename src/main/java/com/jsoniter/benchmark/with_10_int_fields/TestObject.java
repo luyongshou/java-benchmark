@@ -3,10 +3,11 @@ package com.jsoniter.benchmark.with_10_int_fields;
 import com.dslplatform.json.CompiledJson;
 import com.jsoniter.output.JsonStream;
 
+import java.io.Serializable;
 import java.util.Random;
 
 @CompiledJson
-public class TestObject {
+public class TestObject implements Serializable {
 
     public int field1;
     public int field2;
