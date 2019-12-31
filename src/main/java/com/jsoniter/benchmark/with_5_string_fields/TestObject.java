@@ -3,8 +3,10 @@ package com.jsoniter.benchmark.with_5_string_fields;
 import com.dslplatform.json.CompiledJson;
 import com.jsoniter.output.JsonStream;
 
+import java.io.Serializable;
+
 @CompiledJson
-public class TestObject {
+public class TestObject implements Serializable {
 
     public String field1;
     public String field2;

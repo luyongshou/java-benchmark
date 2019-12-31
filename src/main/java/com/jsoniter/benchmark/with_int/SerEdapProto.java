@@ -26,6 +26,8 @@ public class SerEdapProto {
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
+
+        System.out.println("length=" + ProtoBuf.toByteArray(testObject).length);
     }
 
     @Benchmark

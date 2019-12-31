@@ -3,8 +3,10 @@ package com.jsoniter.benchmark.with_int;
 import com.dslplatform.json.CompiledJson;
 import com.jsoniter.output.JsonStream;
 
+import java.io.Serializable;
+
 @CompiledJson
-public class TestObject {
+public class TestObject implements Serializable {
 
     public int field1;
 
