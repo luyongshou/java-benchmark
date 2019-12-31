@@ -2,6 +2,8 @@ package com.jsoniter.benchmark.with_object_list;
 
 import com.jsoniter.benchmark.All;
 import io.edap.x.protobuf.ProtoBuf;
+import io.edap.x.protobuf.ProtoBufEncoder;
+import io.edap.x.protobuf.ProtoBufWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -24,20 +26,26 @@ public class SerEdapProto {
 
     private TestObject testObject;
 
+    ProtoBufEncoder codec;
+    ProtoBufWriter writer;
+
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
         byte[] bs = ProtoBuf.toByteArray(testObject);
-        System.out.println("length=" + bs.length);
-        System.out.println("+-----------------------------------------------+");
-        System.out.println(conver2HexStr(bs));
-        System.out.println("+-----------------------------------------------+");
+        if (bs != null) {
+            System.out.println("length=" + bs.length);
+            System.out.println("+-----------------------------------------------+");
+            System.out.println(conver2HexStr(bs));
+            System.out.println("+-----------------------------------------------+");
+        }
     }
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void ser(Blackhole bh) throws IOException {
+
         for (int i = 0; i < 1000; i++) {
             bh.consume(ProtoBuf.toByteArray(testObject));
         }

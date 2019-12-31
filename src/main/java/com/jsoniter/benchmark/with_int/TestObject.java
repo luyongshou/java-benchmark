@@ -10,7 +10,7 @@ public class TestObject {
 
     public static TestObject createTestObject() {
         TestObject testObject = new TestObject();
-        testObject.field1 = 31415926;
+        testObject.field1 = 100;
         return testObject;
     }
 
