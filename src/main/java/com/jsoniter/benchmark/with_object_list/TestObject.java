@@ -4,11 +4,12 @@ import com.dslplatform.json.CompiledJson;
 import com.jsoniter.annotation.JsonProperty;
 import com.jsoniter.output.JsonStream;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @CompiledJson
-public class TestObject {
+public class TestObject implements Serializable {
 
     @JsonProperty(nullable = false, collectionValueNullable = false)
     public List<ElementObject> field1;

@@ -4,8 +4,10 @@ import com.dslplatform.json.CompiledJson;
 import com.jsoniter.annotation.JsonProperty;
 import com.jsoniter.output.JsonStream;
 
+import java.io.Serializable;
+
 @CompiledJson
-public class TestObject {
+public class TestObject implements Serializable {
 
     @JsonProperty(nullable = false)
     public String field1;
