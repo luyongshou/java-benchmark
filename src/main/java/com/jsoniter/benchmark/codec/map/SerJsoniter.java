@@ -36,10 +36,8 @@ public class SerJsoniter {
 //        JsonIterator.enableAnnotationSupport();
         JsonStream.setMode(EncodingMode.DYNAMIC_MODE);
         JsonIterator.setMode(DecodingMode.DYNAMIC_MODE_AND_MATCH_FIELD_WITH_HASH);
-        testObject = new HashMap<>();
-        testObject.put("name", "louis");
-        testObject.put("age", 41);
-        testObject.put("height", 170.2);
+        testObject = TestObject.map;
+
         stream = new JsonStream(null, 512);
         byteArrayOutputStream = new ByteArrayOutputStream();
         byteArrayOutputStream.reset();

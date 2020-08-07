@@ -3,6 +3,7 @@ package com.jsoniter.benchmark.codec.map;
 import com.jsoniter.benchmark.All;
 import io.edap.x.protobuf.EncodeException;
 import io.edap.x.protobuf.ProtoBuf;
+import io.edap.x.protobuf.ProtoBufException;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -11,41 +12,44 @@ import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.RunnerException;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.jsoniter.benchmark.All.conver2HexStr;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author : luysh@yonyou.com
+ * @date : 2020/8/7
+ */
 @State(Scope.Thread)
-public class SerEdapProto {
+public class DerEdapProto {
 
-    Map<String, Object> testObject;
+    private byte[] data;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) throws EncodeException {
-        testObject = TestObject.map;
+    public void benchSetup(BenchmarkParams params) throws EncodeException, ProtoBufException {
+        Map<String, Object> testObject = TestObject.map;
 
-        byte[] bs = ProtoBuf.ser(testObject);
-        System.out.println("length=" + bs.length);
+        data = ProtoBuf.ser(testObject);
+        System.out.println("length=" + data.length);
         System.out.println("+-----------------------------------------------+");
-        System.out.println(conver2HexStr(bs));
-        System.out.println(new String(bs));
-        for (byte b : bs) {
+        System.out.println(conver2HexStr(data));
+        System.out.println(new String(data));
+        for (byte b : data) {
             System.out.print((int)b + ",");
         }
         System.out.println();
+        System.out.println(ProtoBuf.der(data));
         System.out.println("+-----------------------------------------------+");
     }
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
-    public void ser(Blackhole bh) throws IOException, EncodeException {
+    public void ser(Blackhole bh) throws IOException, ProtoBufException {
         for (int i = 0; i < 1000; i++) {
-            byte[] data = ProtoBuf.ser(testObject);
-            bh.consume(data);
+            bh.consume(ProtoBuf.der(data));
         }
     }
 
@@ -57,7 +61,7 @@ public class SerEdapProto {
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "codec.map.SerEdapProto",
+                "codec.map.DerEdapProto",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",

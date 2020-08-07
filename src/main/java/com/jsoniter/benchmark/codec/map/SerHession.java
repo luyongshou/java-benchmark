@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static com.jsoniter.benchmark.All.conver2HexStr;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -31,10 +32,9 @@ public class SerHession {
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) throws IOException {
-        testObject = new HashMap<>();
-        testObject.put("name", "louis");
-        testObject.put("age", 41);
-        testObject.put("height", 170.2);
+        testObject = TestObject.map;
+
+        //testObject.put("height", 170.2);
         byteArrayOutputStream = new ByteArrayOutputStream();
         out = new Hessian2Output(byteArrayOutputStream);
         SerializerFactory serializerFactory = SerializerFactory.createDefault();
@@ -44,6 +44,7 @@ public class SerHession {
         byte[] bs = byteArrayOutputStream.toByteArray();
         System.out.println("length=" + bs.length);
         System.out.println("+-----------------------------------------------+");
+        System.out.println(conver2HexStr(bs));
         System.out.println(new String(bs));
         System.out.println("+-----------------------------------------------+");
 
@@ -64,7 +65,7 @@ public class SerHession {
             out.reset();
             out.writeObject(testObject);
             out.close();
-            bh.consume(byteArrayOutputStream.toByteArray());
+            bh.consume(byteArrayOutputStream);
         }
     }
 
