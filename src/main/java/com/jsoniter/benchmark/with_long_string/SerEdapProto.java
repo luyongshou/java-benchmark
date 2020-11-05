@@ -2,6 +2,7 @@ package com.jsoniter.benchmark.with_long_string;
 
 import com.jsoniter.benchmark.All;
 import io.edap.x.protobuf.ProtoBuf;
+import io.edap.x.protobuf.ProtoBufWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;

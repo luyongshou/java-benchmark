@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 @State(Scope.Thread)
 public class SerHession {
 
-    private Map<String, Object> testObject;
+    private Map testObject;
     private ByteArrayOutputStream byteArrayOutputStream;
     private Hessian2Output out;
 

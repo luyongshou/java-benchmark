@@ -44,7 +44,7 @@ public class DeserEdapProto {
     }
 
     @Test
-    public void test() throws IOException {
+    public void test() throws IOException, ProtoBufException {
         benchSetup(null);
         assertEquals(31415926, ProtoBuf.toObject(testJSON, TestObject.class).field1);
     }

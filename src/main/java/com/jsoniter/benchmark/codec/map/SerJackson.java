@@ -20,7 +20,7 @@ public class SerJackson {
 
     private ObjectMapper objectMapper;
     private ByteArrayOutputStream byteArrayOutputStream;
-    private Map<String, Object> testObject;
+    private Map testObject;
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) throws IOException {

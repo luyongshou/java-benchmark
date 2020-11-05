@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 @State(Scope.Thread)
 public class SerEdapProto {
 
-    Map<String, Object> testObject;
+    Map testObject;
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) throws EncodeException {

@@ -30,7 +30,7 @@ public class DeserHession {
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) throws IOException {
-        Map<String, Object> testObject = TestObject.map;
+        Map testObject = TestObject.map;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         Hessian2Output out = new Hessian2Output(byteArrayOutputStream);
         SerializerFactory serializerFactory = SerializerFactory.createDefault();

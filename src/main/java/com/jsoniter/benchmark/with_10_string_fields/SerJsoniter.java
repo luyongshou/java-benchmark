@@ -43,7 +43,7 @@ public class SerJsoniter {
         stream.reset(byteArrayOutputStream);
         stream.writeVal(testObject);
         stream.flush();
-
+        System.out.println("str=" + new String(byteArrayOutputStream.toByteArray()));
         System.out.println("length=" + com.jsoniter.benchmark.with_object_list.TestObject.createTestJSON().length);
     }
 

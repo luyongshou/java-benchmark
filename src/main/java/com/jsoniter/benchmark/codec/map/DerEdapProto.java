@@ -1,5 +1,6 @@
 package com.jsoniter.benchmark.codec.map;
 
+import com.alibaba.fastjson.JSON;
 import com.jsoniter.benchmark.All;
 import io.edap.x.protobuf.EncodeException;
 import io.edap.x.protobuf.ProtoBuf;
@@ -12,6 +13,7 @@ import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.RunnerException;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +31,7 @@ public class DerEdapProto {
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) throws EncodeException, ProtoBufException {
-        Map<String, Object> testObject = TestObject.map;
+        Map testObject = TestObject.map;
 
         data = ProtoBuf.ser(testObject);
         System.out.println("length=" + data.length);
@@ -39,8 +41,13 @@ public class DerEdapProto {
         for (byte b : data) {
             System.out.print((int)b + ",");
         }
+        Map derData = (Map)ProtoBuf.der(data);
         System.out.println();
-        System.out.println(ProtoBuf.der(data));
+        System.out.println(derData);
+        System.out.println("+-----------------------------------------------+");
+        //System.out.println((derData.field1).length());
+        System.out.println(JSON.toJSON(derData));
+        //System.out.println((derData.get("name")).equals((String)TestObject.map.get("name")));
         System.out.println("+-----------------------------------------------+");
     }
 
