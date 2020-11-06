@@ -1,4 +1,4 @@
-package com.jsoniter.benchmark.with_long_string;
+package com.jsoniter.benchmark.with_int;
 
 import com.jsoniter.benchmark.All;
 import io.edap.x.io.ByteArrayBufOut;
@@ -68,7 +68,7 @@ public class SerEdapJson {
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "with_long_string.SerEdapJson",
+                "with_int.SerEdapJson",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",

@@ -31,16 +31,16 @@ public class TestObject {
 
     public static TestObject createTestObject() {
         TestObject testObject = new TestObject();
-        testObject.field1 = "1";
-        testObject.field2 = "2";
-        testObject.field3 = "3";
-        testObject.field4 = "4";
-        testObject.field5 = "5";
-        testObject.field6 = "6";
-        testObject.field7 = "7";
-        testObject.field8 = "8";
-        testObject.field9 = "9";
-        testObject.field10 = "10";
+        testObject.field1 = "1234";
+        testObject.field2 = "2234";
+        testObject.field3 = "3234";
+        testObject.field4 = "4234";
+        testObject.field5 = "5234";
+        testObject.field6 = "6234";
+        testObject.field7 = "7234";
+        testObject.field8 = "8234";
+        testObject.field9 = "9234";
+        testObject.field10 = "10234";
         return testObject;
     }
 
