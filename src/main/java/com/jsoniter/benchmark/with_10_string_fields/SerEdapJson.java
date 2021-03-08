@@ -41,7 +41,7 @@ public class SerEdapJson {
         byteArrayOutputStream = new ByteArrayOutputStream();
         //encoder = new TestObjectEncoder();
         encoder.encode(jw, testObject);
-        int len = jw.getPos();
+        int len = jw.size();
         byte[] bs = new byte[len];
         System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
         System.out.println("length=" + bs.length);
@@ -60,7 +60,7 @@ public class SerEdapJson {
             encoder.encode(jw, testObject);
 //            jw.toStream(byteArrayOutputStream);
 //            bh.consume(byteArrayOutputStream);
-            int len = jw.getPos();
+            int len = jw.size();
             byte[] bs = new byte[len];
             System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
 
@@ -73,88 +73,6 @@ public class SerEdapJson {
         assertEquals("31415926", "31415926");
     }
 
-    public static class TestObjectEncoder  {
-        private static final byte[] KBS_FIELD1 = ",\"field1\":null".getBytes();
-        private static final byte[] KBS_FIELD10 = ",\"field10\":null".getBytes();
-        private static final byte[] KBS_FIELD2 = ",\"field2\":null".getBytes();
-        private static final byte[] KBS_FIELD3 = ",\"field3\":null".getBytes();
-        private static final byte[] KBS_FIELD4 = ",\"field4\":null".getBytes();
-        private static final byte[] KBS_FIELD5 = ",\"field5\":null".getBytes();
-        private static final byte[] KBS_FIELD6 = ",\"field6\":null".getBytes();
-        private static final byte[] KBS_FIELD7 = ",\"field7\":null".getBytes();
-        private static final byte[] KBS_FIELD8 = ",\"field8\":null".getBytes();
-        private static final byte[] KBS_FIELD9 = ",\"field9\":null".getBytes();
-
-        public TestObjectEncoder() {
-        }
-
-        public void encode(ByteArrayJsonWriter var1, TestObject var2) {
-            var1.writeByte((byte)'{');
-            if (var2.field1 != null) {
-                var1.writeBytes(KBS_FIELD1, 1, 9);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field1);
-            }
-
-            if (var2.field10 != null) {
-                var1.writeBytes(KBS_FIELD10, 0, 11);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field10);
-            }
-
-            if (var2.field2 != null) {
-                var1.writeBytes(KBS_FIELD2, 0, 10);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field2);
-            }
-
-            if (var2.field3 != null) {
-                var1.writeBytes(KBS_FIELD3, 0, 10);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field3);
-            }
-
-            if (var2.field4 != null) {
-                var1.writeBytes(KBS_FIELD4, 0, 10);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field4);
-            }
-
-            if (var2.field5 != null) {
-                var1.writeBytes(KBS_FIELD5, 0, 10);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field5);
-            }
-
-            if (var2.field6 != null) {
-                var1.writeBytes(KBS_FIELD6, 0, 10);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field6);
-            }
-
-            if (var2.field7 != null) {
-                var1.writeBytes(KBS_FIELD7, 0, 10);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field7);
-            }
-
-            if (var2.field8 != null) {
-                var1.writeBytes(KBS_FIELD8, 0, 10);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field8);
-            }
-
-            if (var2.field9 != null) {
-                var1.writeBytes(KBS_FIELD9, 0, 10);
-                //var1.writeAscii("\"field1\":null", 9);
-                var1.writeString(var2.field9);
-            }
-
-                var1.writeByte((byte)125);
-
-
-        }
-    }
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{

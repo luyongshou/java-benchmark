@@ -37,7 +37,7 @@ public class SerEdapJson {
         jw = new ByteArrayJsonWriter(out);
         encoder = JsonCodecRegister.INSTANCE.getEncoder(TestObject.class);
         encoder.encode(jw, testObject);
-        int len = jw.getPos();
+        int len = jw.size();
         byte[] bs = new byte[len];
         System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
         System.out.println("length=" + bs.length);
@@ -53,7 +53,7 @@ public class SerEdapJson {
         for (int i = 0; i < 1000; i++) {
             jw.reset();
             encoder.encode(jw, testObject);
-            int len = jw.getPos();
+            int len = jw.size();
             byte[] bs = new byte[len];
             System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
         }

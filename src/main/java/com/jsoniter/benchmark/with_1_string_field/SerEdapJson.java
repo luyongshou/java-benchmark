@@ -37,7 +37,7 @@ public class SerEdapJson {
         jw = new ByteArrayJsonWriter(out);
         encoder = JsonCodecRegister.INSTANCE.getEncoder(TestObject.class);
         encoder.encode(jw, testObject);
-        int len = jw.getPos();
+        int len = jw.size();
         byte[] bs = new byte[len];
         System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
         System.out.println("length=" + bs.length);
@@ -53,28 +53,9 @@ public class SerEdapJson {
         for (int i = 0; i < 1000; i++) {
             jw.reset();
             encoder.encode(jw, testObject);
-            int len = jw.getPos();
+            int len = jw.size();
             byte[] bs = new byte[len];
             System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
-        }
-    }
-
-    public static class TestObjectEncoder {
-
-        static byte[] field1Data = "\"field1\":null".getBytes();
-        public void ser(JsonWriter jw, TestObject var2) {
-            byte var3 = 123;
-            if (var2.field1 != null) {
-                jw.writeByteAndBytes(var3, field1Data, 0, 9);
-                jw.writeString(var2.field1);
-                var3 = 44;
-            }
-
-            if (var3 == 44) {
-                jw.writeByte((byte)125);
-            } else {
-                jw.writeBytes((byte)123, (byte)125);
-            }
         }
     }
 

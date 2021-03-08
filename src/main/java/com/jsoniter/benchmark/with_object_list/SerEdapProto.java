@@ -47,7 +47,7 @@ public class SerEdapProto {
     public void ser(Blackhole bh) throws IOException {
 
         for (int i = 0; i < 1000; i++) {
-            bh.consume(ProtoBuf.toByteArray(testObject, ProtoBufWriter.WriteOrder.REVERSE));
+            bh.consume(ProtoBuf.toByteArray(testObject));
         }
     }
 
