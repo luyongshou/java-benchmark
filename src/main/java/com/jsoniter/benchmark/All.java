@@ -6,11 +6,11 @@ import java.net.URLClassLoader;
 
 public class All {
     public static void loadJMH() {
-        URLClassLoader classLoader = (URLClassLoader) All.class.getClassLoader();
-        StringBuilder classpath = new StringBuilder();
-        for(URL url : classLoader.getURLs())
-            classpath.append(url.getPath()).append(File.pathSeparator);
-        System.setProperty("java.class.path", classpath.toString());
+//        URLClassLoader classLoader = (URLClassLoader) All.class.getClassLoader();
+//        StringBuilder classpath = new StringBuilder();
+//        for(URL url : classLoader.getURLs())
+//            classpath.append(url.getPath()).append(File.pathSeparator);
+        //System.setProperty("java.class.path", classpath.toString());
     }
 
     public static String conver2HexStr(byte[] b) {
