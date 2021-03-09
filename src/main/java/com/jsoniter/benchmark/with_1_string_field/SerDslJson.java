@@ -43,10 +43,9 @@ public class SerDslJson {
     public void ser(Blackhole bh) throws IOException {
         for (int i = 0; i < 1000; i++) {
             jsonWriter.reset();
-            byteArrayOutputStream.reset();
+            //byteArrayOutputStream.reset();
             ExternalSerialization.serialize(testObject, jsonWriter, false);
-            jsonWriter.toStream(byteArrayOutputStream);
-            bh.consume(byteArrayOutputStream);
+            bh.consume(jsonWriter.toByteArray());
         }
     }
 

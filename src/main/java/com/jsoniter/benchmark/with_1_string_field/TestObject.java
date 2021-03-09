@@ -14,7 +14,7 @@ public class TestObject implements Serializable {
 
     public static TestObject createTestObject() {
         TestObject testObject = new TestObject();
-        testObject.field1 = "1";
+        testObject.field1 = "中文内容";
         return testObject;
     }
 
