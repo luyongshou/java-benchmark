@@ -1,14 +1,18 @@
 package com.jsoniter.benchmark.with_1_string_field;
 
-import com.dslplatform.json.JsonWriter;
 import com.jsoniter.benchmark.All;
 import com.jsoniter.benchmark.ExternalSerialization;
+import javassist.bytecode.ByteArray;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.RunnerException;
+import org.redkale.convert.Encodeable;
+import org.redkale.convert.json.JsonBytesWriter;
 import org.redkale.convert.json.JsonConvert;
+import org.redkale.convert.json.JsonFactory;
+import org.redkale.convert.json.JsonWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,15 +27,21 @@ public class SerRedkale {
 
     private TestObject testObject;
     private ByteArrayOutputStream byteArrayOutputStream;
-    JsonConvert jsonConvert;
+
+    ByteArray array ;
+    JsonBytesWriter writer;
+    Encodeable<JsonWriter, Object> encoder;
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) throws IOException {
         testObject = TestObject.createTestObject();
         byteArrayOutputStream = new ByteArrayOutputStream();
 
-        jsonConvert = JsonConvert.root();
-        byte[] bytes = jsonConvert.convertToBytes(testObject);
+        array = new ByteArray();
+        writer = new JsonBytesWriter();
+        encoder = JsonFactory.root().loadEncoder(testObject.getClass());
+        encoder.convertTo(writer, testObject);
+        byte[] bytes = writer.toBytes();
         System.out.println("length=" + bytes.length);
         System.out.println("+-----------------------------------------------+");
         System.out.println(new String(bytes));
@@ -43,7 +53,9 @@ public class SerRedkale {
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void ser(Blackhole bh) throws IOException {
         for (int i = 0; i < 1000; i++) {
-            bh.consume(jsonConvert.convertToBytes(testObject));
+            writer.clear();
+            encoder.convertTo(writer,testObject);
+            bh.consume(writer.toBytes());
         }
     }
 
