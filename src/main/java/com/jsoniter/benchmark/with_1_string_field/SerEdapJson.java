@@ -15,8 +15,10 @@ import org.openjdk.jmh.runner.RunnerException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
+import static com.jsoniter.benchmark.All.conver2HexStr;
 import static org.junit.Assert.assertEquals;
 
 /**

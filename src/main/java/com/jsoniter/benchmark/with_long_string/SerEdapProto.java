@@ -13,6 +13,8 @@ import org.openjdk.jmh.runner.RunnerException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static io.edap.x.util.StringUtil.IS_BYTE_ARRAY;
+import static io.edap.x.util.StringUtil.isLatin1;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -28,6 +30,8 @@ public class SerEdapProto {
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
         System.out.println("length=" + testObject.field1.length());
+        System.out.println("IS_BYTE_ARRAY=" + IS_BYTE_ARRAY);
+        System.out.println("isLatin1(value)=" + isLatin1(testObject.field1));
     }
 
     @Benchmark

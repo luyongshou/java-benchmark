@@ -1,7 +1,10 @@
 package com.jsoniter.benchmark.with_5_string_fields;
 
 import com.jsoniter.benchmark.All;
-import io.edap.x.protobuf.ProtoBuf;
+import io.edap.x.io.BufOut;
+import io.edap.x.protobuf.*;
+import io.edap.x.protobuf.internal.ProtoBufOut;
+import io.edap.x.protobuf.writer.StandardProtoBufWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -9,6 +12,7 @@ import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.RunnerException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -23,10 +27,18 @@ import static org.junit.Assert.assertEquals;
 public class SerEdapProto {
 
     private TestObject testObject;
+    ProtoBufEncoder codec;
+    ProtoBufWriter writer;
+    BufOut out;
+    private ByteArrayOutputStream byteArrayOutputStream;
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
+        codec = ProtoBufCodecRegister.INSTANCE.getEncoder(testObject.getClass());
+        out    = new ProtoBufOut();
+        writer = new StandardProtoBufWriter(out);
+        byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] bs = ProtoBuf.toByteArray(testObject);
         System.out.println("length=" + bs.length);
         System.out.println("+-----------------------------------------------+");
@@ -37,9 +49,13 @@ public class SerEdapProto {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
-    public void ser(Blackhole bh) throws IOException {
+    public void ser(Blackhole bh) throws IOException, EncodeException {
         for (int i = 0; i < 1000; i++) {
-            bh.consume(ProtoBuf.toByteArray(testObject));
+            writer.reset();
+            byteArrayOutputStream.reset();
+            codec.encode(writer, testObject);
+            writer.toStream(byteArrayOutputStream);
+            bh.consume(byteArrayOutputStream);
         }
     }
 

@@ -20,4 +20,5 @@ public class All {
         }
         return result.toString().substring(0, result.length() - 1);
     }
+
 }

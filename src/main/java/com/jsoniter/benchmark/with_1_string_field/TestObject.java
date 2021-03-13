@@ -14,7 +14,7 @@ public class TestObject implements Serializable {
 
     public static TestObject createTestObject() {
         TestObject testObject = new TestObject();
-        testObject.field1 = "中文内容";
+        testObject.field1 = "比较长的中文字符串";
         return testObject;
     }
 

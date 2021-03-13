@@ -13,6 +13,7 @@ import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.RunnerException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 public class SerEdapJson {
 
     private TestObject testObject;
+    private ByteArrayOutputStream byteArrayOutputStream;
     ByteArrayBufOut out;
     JsonWriter jw;
     JsonEncoder encoder;
@@ -36,6 +38,7 @@ public class SerEdapJson {
         out = new ByteArrayBufOut();
         jw = new ByteArrayJsonWriter(out);
         encoder = JsonCodecRegister.INSTANCE.getEncoder(TestObject.class);
+        byteArrayOutputStream = new ByteArrayOutputStream();
         encoder.encode(jw, testObject);
         int len = jw.size();
         byte[] bs = new byte[len];
@@ -52,10 +55,10 @@ public class SerEdapJson {
     public void ser(Blackhole bh) throws IOException {
         for (int i = 0; i < 1000; i++) {
             jw.reset();
+            byteArrayOutputStream.reset();
             encoder.encode(jw, testObject);
-            int len = jw.size();
-            byte[] bs = new byte[len];
-            System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
+            jw.toStream(byteArrayOutputStream);
+            bh.consume(byteArrayOutputStream);
         }
     }
 
