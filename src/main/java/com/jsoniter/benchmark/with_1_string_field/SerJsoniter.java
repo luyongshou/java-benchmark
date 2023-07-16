@@ -56,11 +56,11 @@ public class SerJsoniter {
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void ser(Blackhole bh) throws IOException {
         for (int i = 0; i < 1000; i++) {
-            byteArrayOutputStream.reset();
-            stream.reset(byteArrayOutputStream);
+            //byteArrayOutputStream.reset();
+            stream.reset(null);
             stream.writeVal(testObject);
-            stream.flush();
-            bh.consume(byteArrayOutputStream);
+            //stream.flush();
+            bh.consume(stream.buffer());
         }
     }
 

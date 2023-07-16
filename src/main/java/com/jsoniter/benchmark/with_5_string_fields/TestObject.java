@@ -16,11 +16,11 @@ public class TestObject implements Serializable {
 
     public static TestObject createTestObject() {
         TestObject testObject = new TestObject();
-        testObject.field1 = "1";
-        testObject.field2 = "2";
-        testObject.field3 = "3";
-        testObject.field4 = "4";
-        testObject.field5 = "5";
+        testObject.field1 = "1中文";
+        testObject.field2 = "2中文";
+        testObject.field3 = "3中文";
+        testObject.field4 = "4中文";
+        testObject.field5 = "5中文";
         return testObject;
     }
 

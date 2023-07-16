@@ -25,10 +25,15 @@ public class SerDslJson {
     private TestObject testObject;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) {
+    public void benchSetup(BenchmarkParams params) throws IOException {
         testObject = TestObject.createTestObject();
         jsonWriter = new JsonWriter();
         byteArrayOutputStream = new ByteArrayOutputStream();
+        jsonWriter.reset();
+        byteArrayOutputStream.reset();
+        ExternalSerialization.serialize(testObject, jsonWriter, false);
+        jsonWriter.toStream(byteArrayOutputStream);
+        System.out.println("length=" + byteArrayOutputStream.toByteArray().length);
     }
 
     @Benchmark

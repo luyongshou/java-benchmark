@@ -1,7 +1,8 @@
 package com.jsoniter.benchmark.with_1_string_field;
 
 import com.jsoniter.benchmark.All;
-import io.edap.x.protobuf.ProtoBuf;
+import io.edap.x.protobuf.*;
+import io.edap.x.protobuf.reader.ByteArrayReader;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -23,16 +24,25 @@ public class DeserEdapProto {
 
     private byte[] testJSON;
 
+    private ProtoBufReader reader;
+
+    private ProtoBufDecoder<TestObject> decoder = ProtoBufCodecRegister.INSTANCE.getDecoder(TestObject.class);
+
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testJSON = ProtoBuf.toByteArray(TestObject.createTestObject());
+        reader = new ByteArrayReader(testJSON);
+
     }
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
-    public void deser(Blackhole bh) throws IOException {
+    public void deser(Blackhole bh) throws IOException, ProtoBufException {
         for (int i = 0; i < 1000; i++) {
+//            reader.reset();
+//            decoder.decode(reader);
+//            bh.consume(decoder.decode(reader));
             bh.consume(ProtoBuf.toObject(testJSON, TestObject.class));
         }
     }

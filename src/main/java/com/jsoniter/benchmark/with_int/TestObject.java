@@ -12,7 +12,7 @@ public class TestObject implements Serializable {
 
     public static TestObject createTestObject() {
         TestObject testObject = new TestObject();
-        testObject.field1 = 100;
+        testObject.field1 = 10034;
         return testObject;
     }
 

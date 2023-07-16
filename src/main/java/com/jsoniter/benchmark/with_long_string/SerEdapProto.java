@@ -31,7 +31,7 @@ public class SerEdapProto {
         testObject = TestObject.createTestObject();
         System.out.println("length=" + testObject.field1.length());
         System.out.println("IS_BYTE_ARRAY=" + IS_BYTE_ARRAY);
-        System.out.println("isLatin1(value)=" + isLatin1(testObject.field1));
+        System.out.println("length=" + ProtoBuf.toByteArray(testObject).length);
     }
 
     @Benchmark

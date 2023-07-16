@@ -1,8 +1,6 @@
 package com.jsoniter.benchmark.with_int;
 
-import com.jsoniter.JsonIterator;
 import com.jsoniter.benchmark.All;
-import com.jsoniter.spi.TypeLiteral;
 import io.edap.x.protobuf.*;
 import org.junit.Test;
 import org.openjdk.jmh.Main;

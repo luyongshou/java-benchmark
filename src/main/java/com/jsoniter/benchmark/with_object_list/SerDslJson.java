@@ -11,7 +11,10 @@ import org.openjdk.jmh.runner.RunnerException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
+
+import static com.jsoniter.benchmark.All.conver2HexStr;
 
 /*
 Benchmark       Mode  Cnt       Score      Error  Units
@@ -25,10 +28,20 @@ public class SerDslJson {
     private TestObject testObject;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) {
+    public void benchSetup(BenchmarkParams params) throws UnsupportedEncodingException {
         testObject = TestObject.createTestObject();
         jsonWriter = new JsonWriter();
         byteArrayOutputStream = new ByteArrayOutputStream();
+
+        jsonWriter.reset();
+        byteArrayOutputStream.reset();
+        ExternalSerialization.serialize(testObject, jsonWriter, false);
+        byte[] bs = jsonWriter.toByteArray();
+
+        System.out.println("length=" + bs.length);
+        System.out.println("+-----------------------------------------------+");
+        System.out.println(new String(bs, "utf-8"));
+        System.out.println("+-----------------------------------------------+");
     }
 
     @Benchmark
@@ -39,7 +52,7 @@ public class SerDslJson {
             jsonWriter.reset();
             byteArrayOutputStream.reset();
             ExternalSerialization.serialize(testObject, jsonWriter, false);
-            jsonWriter.toStream(byteArrayOutputStream);
+            jsonWriter.toByteArray();
             bh.consume(byteArrayOutputStream);
         }
     }

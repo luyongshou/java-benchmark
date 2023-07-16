@@ -25,7 +25,7 @@ public class SerPb {
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
-        testObject = Pb.PbTestObject.newBuilder().setField1(31415926)
+        testObject = Pb.PbTestObject.newBuilder().setField1(100)
                 .build();
         byteArrayOutputStream = new ByteArrayOutputStream();
     }

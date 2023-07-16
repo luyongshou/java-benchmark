@@ -28,11 +28,11 @@ public class SerPb {
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) throws IOException {
         testObject = PbTestObect.PbTestObject.newBuilder()
-                .setField1("1")
-                .setField2("2")
-                .setField3("3")
-                .setField4("4")
-                .setField5("5")
+                .setField1("1中文")
+                .setField2("2中文")
+                .setField3("3中文")
+                .setField4("4中文")
+                .setField5("5中文")
                 .build();
         byteArrayOutputStream = new ByteArrayOutputStream();
         byteArrayOutputStream.reset();
