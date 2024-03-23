@@ -106,26 +106,20 @@
             <artifactId>protobuf-java</artifactId>
             <version>3.4.0</version>
         </dependency>
-
         <dependency>
             <groupId>io.edap</groupId>
-            <artifactId>edapx-protobuf</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.edap</groupId>
-            <artifactId>edap-protobuf</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.edap</groupId>
-            <artifactId>edapx-json</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <artifactId>edap-eproto</artifactId>
+            <version>0.1.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.edap</groupId>
             <artifactId>edap-json</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.1.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.edap</groupId>
+            <artifactId>edap-protobuf</artifactId>
+            <version>0.1.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.caucho</groupId>
@@ -156,9 +150,9 @@
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
         <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>YonyouCloud-Snapshot</id>
+            <name>YonyouCloud-Snapshot</name>
+            <url>https://repo.yyrd.com/artifactory/YonyouCloud-Snapshot/</url>
         </repository>
     </repositories>
     <distributionManagement>

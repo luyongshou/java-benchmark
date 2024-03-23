@@ -6,6 +6,7 @@ import io.edap.protobuf.*;
 import io.edap.protobuf.internal.ProtoBufOut;
 import io.edap.protobuf.model.ProtoBufOption;
 import io.edap.protobuf.writer.FastProtoBufWriter;
+import io.edap.protobuf.writer.StandardProtoBufWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -28,37 +29,39 @@ import static org.junit.Assert.assertEquals;
 public class SerEdapFastProto {
 
     private TestObject testObject;
+
     ProtoBufEncoder codec;
     ProtoBufWriter writer;
+
     BufOut out;
     private ByteArrayOutputStream byteArrayOutputStream;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) throws EncodeException, IOException {
+    public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
+        byte[] bs = ProtoBuf.toByteArray(testObject);
         ProtoBufOption option = new ProtoBufOption();
-        byteArrayOutputStream = new ByteArrayOutputStream();
-
-        option.setCodecType(ProtoBuf.CodecType.FAST);
+        option.setCodecType(io.edap.protobuf.CodecType.FAST);
         codec = ProtoBufCodecRegister.INSTANCE.getEncoder(testObject.getClass(), option);
         out    = new ProtoBufOut();
         writer = new FastProtoBufWriter(out);
-        writer.reset();
-        byteArrayOutputStream.reset();
-        codec.encode(writer, testObject);
-        writer.toStream(byteArrayOutputStream);
-        byte[] bs = byteArrayOutputStream.toByteArray();
-        System.out.println("length=" + bs.length);
-        System.out.println("+-----------------------------------------------+");
-        System.out.println(conver2HexStr(bs));
-        System.out.println("+-----------------------------------------------+");
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        if (bs != null) {
+            System.out.println("length=" + bs.length);
+            System.out.println("+-----------------------------------------------+");
+            System.out.println(conver2HexStr(bs));
+            System.out.println("+-----------------------------------------------+");
+        }
     }
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void ser(Blackhole bh) throws IOException, EncodeException {
+
         for (int i = 0; i < 1000; i++) {
+           // bh.consume(ProtoBuf.toByteArray(testObject));
+
             writer.reset();
             byteArrayOutputStream.reset();
             codec.encode(writer, testObject);
@@ -69,6 +72,7 @@ public class SerEdapFastProto {
 
     @Test
     public void test() throws IOException {
+        benchSetup(null);
         assertEquals("31415926", "31415926");
     }
 

@@ -1,10 +1,10 @@
 package com.jsoniter.benchmark.with_int;
 
 import com.jsoniter.benchmark.All;
-import io.edap.x.io.BufOut;
-import io.edap.x.protobuf.*;
-import io.edap.x.protobuf.internal.ProtoBufOut;
-import io.edap.x.protobuf.writer.StandardProtoBufWriter;
+import io.edap.io.BufOut;
+import io.edap.protobuf.*;
+import io.edap.protobuf.internal.ProtoBufOut;
+import io.edap.protobuf.writer.StandardProtoBufWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;

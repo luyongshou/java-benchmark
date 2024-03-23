@@ -3,7 +3,6 @@ package com.jsoniter.benchmark.with_1_string_field;
 import com.caucho.hessian.io.Hessian2Output;
 import com.caucho.hessian.io.SerializerFactory;
 import com.jsoniter.benchmark.All;
-import io.edap.x.protobuf.ProtoBuf;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;

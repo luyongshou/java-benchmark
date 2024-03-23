@@ -1,8 +1,14 @@
-package com.jsoniter.benchmark.codec.map;
+package com.jsoniter.benchmark.with_10_string_fields;
 
-import com.caucho.hessian.io.Hessian2Output;
-import com.caucho.hessian.io.SerializerFactory;
 import com.jsoniter.benchmark.All;
+import io.edap.eproto.Eproto;
+import io.edap.eproto.EprotoCodecRegister;
+import io.edap.eproto.EprotoEncoder;
+import io.edap.eproto.EprotoWriter;
+import io.edap.eproto.write.ByteArrayWriter;
+import io.edap.io.BufOut;
+import io.edap.protobuf.EncodeException;
+import io.edap.protobuf.internal.ProtoBufOut;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -12,8 +18,6 @@ import org.openjdk.jmh.runner.RunnerException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.jsoniter.benchmark.All.conver2HexStr;
@@ -21,50 +25,40 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * @author : luysh@yonyou.com
- * @date : 2019/12/31
+ * @date : 2019/12/25
  */
 @State(Scope.Thread)
-public class SerHession {
+public class SerEproto {
 
-    private Map testObject;
+    private TestObject testObject;
+    EprotoEncoder codec;
+    EprotoWriter writer;
+    BufOut out;
     private ByteArrayOutputStream byteArrayOutputStream;
-    private Hessian2Output out;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) throws IOException {
-        testObject = TestObject.map;
-
-        //testObject.put("height", 170.2);
+    public void benchSetup(BenchmarkParams params) {
+        testObject = TestObject.createTestObject();
+        codec = EprotoCodecRegister.instance().getEncoder(testObject.getClass());
+        out    = new ProtoBufOut();
+        writer = new ByteArrayWriter(out);
         byteArrayOutputStream = new ByteArrayOutputStream();
-        out = new Hessian2Output(byteArrayOutputStream);
-        SerializerFactory serializerFactory = SerializerFactory.createDefault();
-        out.setSerializerFactory(serializerFactory);
-        out.writeObject(testObject);
-        out.close();
-        byte[] bs = byteArrayOutputStream.toByteArray();
+        byte[] bs = Eproto.toByteArray(testObject);
         System.out.println("length=" + bs.length);
         System.out.println("+-----------------------------------------------+");
         System.out.println(conver2HexStr(bs));
-        System.out.println(new String(bs));
-        System.out.println("+-----------------------------------------------+");
-
-        out.writeObject(testObject);
-        out.close();
-        bs = byteArrayOutputStream.toByteArray();
-        System.out.println("length=" + bs.length);
-        System.out.println("+-----------------------------------------------+");
-        System.out.println(new String(bs));
         System.out.println("+-----------------------------------------------+");
     }
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
-    public void ser(Blackhole bh) throws IOException {
+    public void ser(Blackhole bh) throws IOException, EncodeException {
         for (int i = 0; i < 1000; i++) {
-            out.reset();
-            out.writeObject(testObject);
-            out.close();
+            writer.reset();
+            byteArrayOutputStream.reset();
+            codec.encode(writer, testObject);
+            writer.toStream(byteArrayOutputStream);
             bh.consume(byteArrayOutputStream);
         }
     }
@@ -78,7 +72,7 @@ public class SerHession {
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "codec.map.SerHession",
+                "with_10_string_fields.SerEproto",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",

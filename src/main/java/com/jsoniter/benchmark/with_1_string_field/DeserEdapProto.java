@@ -1,8 +1,8 @@
 package com.jsoniter.benchmark.with_1_string_field;
 
 import com.jsoniter.benchmark.All;
-import io.edap.x.protobuf.*;
-import io.edap.x.protobuf.reader.ByteArrayReader;
+import io.edap.protobuf.*;
+import io.edap.protobuf.reader.ByteArrayReader;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -38,7 +38,7 @@ public class DeserEdapProto {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
-    public void deser(Blackhole bh) throws IOException, ProtoBufException {
+    public void deser(Blackhole bh) throws IOException, ProtoException {
         for (int i = 0; i < 1000; i++) {
 //            reader.reset();
 //            decoder.decode(reader);

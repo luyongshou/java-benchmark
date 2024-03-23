@@ -1,11 +1,14 @@
-package com.jsoniter.benchmark.with_long_string;
+package com.jsoniter.benchmark.with_1_string_field;
 
 import com.jsoniter.benchmark.All;
+import io.edap.eproto.Eproto;
+import io.edap.eproto.EprotoCodecRegister;
+import io.edap.eproto.EprotoEncoder;
+import io.edap.eproto.EprotoWriter;
+import io.edap.eproto.write.ByteArrayWriter;
 import io.edap.io.BufOut;
-import io.edap.protobuf.*;
+import io.edap.protobuf.EncodeException;
 import io.edap.protobuf.internal.ProtoBufOut;
-import io.edap.protobuf.model.ProtoBufOption;
-import io.edap.protobuf.writer.FastProtoBufWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -25,25 +28,22 @@ import static org.junit.Assert.assertEquals;
  * @date : 2019/12/25
  */
 @State(Scope.Thread)
-public class SerEdapFastProto {
+public class SerEproto {
 
     private TestObject testObject;
-    ProtoBufEncoder codec;
-    ProtoBufWriter writer;
+    EprotoEncoder codec;
+    EprotoWriter writer;
     BufOut out;
     private ByteArrayOutputStream byteArrayOutputStream;
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
-        ProtoBufOption option = new ProtoBufOption();
-        option.setCodecType(ProtoBuf.CodecType.FAST);
-        codec = ProtoBufCodecRegister.INSTANCE.getEncoder(testObject.getClass(), option);
+        codec = EprotoCodecRegister.instance().getEncoder(testObject.getClass());
         out    = new ProtoBufOut();
-        out.reset();
-        writer = new FastProtoBufWriter(out);
+        writer = new ByteArrayWriter(out);
         byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] bs = ProtoBuf.toByteArray(testObject);
+        byte[] bs = Eproto.toByteArray(testObject);
         System.out.println("length=" + bs.length);
         System.out.println("+-----------------------------------------------+");
         System.out.println(conver2HexStr(bs));
@@ -56,10 +56,9 @@ public class SerEdapFastProto {
     public void ser(Blackhole bh) throws IOException, EncodeException {
         for (int i = 0; i < 1000; i++) {
             writer.reset();
-            byteArrayOutputStream.reset();
+            //byteArrayOutputStream.reset();
             codec.encode(writer, testObject);
-            writer.toStream(byteArrayOutputStream);
-            bh.consume(byteArrayOutputStream);
+            bh.consume(writer.toByteArray());
         }
     }
 
@@ -72,7 +71,7 @@ public class SerEdapFastProto {
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "with_long_string.SerEdapFastProto",
+                "with_1_string_field.SerEproto",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",

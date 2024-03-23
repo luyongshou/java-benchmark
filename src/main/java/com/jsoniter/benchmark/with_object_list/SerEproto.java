@@ -1,9 +1,14 @@
-package com.jsoniter.benchmark.codec.map;
+package com.jsoniter.benchmark.with_object_list;
 
-import com.alibaba.fastjson.JSON;
 import com.jsoniter.benchmark.All;
-import io.edap.x.protobuf.EncodeException;
-import io.edap.x.protobuf.ProtoBuf;
+import io.edap.eproto.Eproto;
+import io.edap.eproto.EprotoCodecRegister;
+import io.edap.eproto.EprotoEncoder;
+import io.edap.eproto.EprotoWriter;
+import io.edap.eproto.write.ByteArrayWriter;
+import io.edap.io.BufOut;
+import io.edap.protobuf.EncodeException;
+import io.edap.protobuf.internal.ProtoBufOut;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -11,32 +16,37 @@ import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.RunnerException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.jsoniter.benchmark.All.conver2HexStr;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author : luysh@yonyou.com
+ * @date : 2019/12/25
+ */
 @State(Scope.Thread)
-public class SerEdapProto {
+public class SerEproto {
 
-    Map testObject;
+    private TestObject testObject;
+    EprotoEncoder codec;
+    EprotoWriter writer;
+    BufOut out;
+    private ByteArrayOutputStream byteArrayOutputStream;
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) throws EncodeException {
-        testObject = TestObject.map;
-        System.out.println(JSON.toJSONString(testObject, true));
-        byte[] bs = ProtoBuf.ser(testObject);
+    public void benchSetup(BenchmarkParams params) {
+        testObject = TestObject.createTestObject();
+        codec = EprotoCodecRegister.instance().getEncoder(testObject.getClass());
+        out    = new ProtoBufOut();
+        writer = new ByteArrayWriter(out);
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] bs = Eproto.toByteArray(testObject);
         System.out.println("length=" + bs.length);
         System.out.println("+-----------------------------------------------+");
         System.out.println(conver2HexStr(bs));
-        System.out.println(new String(bs));
-        for (byte b : bs) {
-            System.out.print((int)b + ",");
-        }
-        System.out.println();
         System.out.println("+-----------------------------------------------+");
     }
 
@@ -45,20 +55,24 @@ public class SerEdapProto {
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void ser(Blackhole bh) throws IOException, EncodeException {
         for (int i = 0; i < 1000; i++) {
-            byte[] data = ProtoBuf.ser(testObject);
-            bh.consume(data);
+            writer.reset();
+            byteArrayOutputStream.reset();
+            codec.encode(writer, testObject);
+            writer.toStream(byteArrayOutputStream);
+            bh.consume(byteArrayOutputStream);
         }
     }
 
     @Test
     public void test() throws IOException {
+        benchSetup(null);
         assertEquals("31415926", "31415926");
     }
 
     public static void main(String[] args) throws IOException, RunnerException {
         All.loadJMH();
         Main.main(new String[]{
-                "codec.map.SerEdapProto",
+                "with_object_list.SerEproto",
                 "-i", "5",
                 "-wi", "5",
                 "-f", "1",

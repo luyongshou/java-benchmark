@@ -1,7 +1,8 @@
 package com.jsoniter.benchmark.with_int;
 
 import com.jsoniter.benchmark.All;
-import io.edap.x.protobuf.*;
+import io.edap.protobuf.ProtoBuf;
+import io.edap.protobuf.ProtoException;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -26,7 +27,7 @@ public class DeserEdapProto {
     //private ProtoBufDecoder<TestObject> decoder = ProtoBufCodecRegister.INSTANCE.getDecoder(TestObject.class);
 
     @Setup(Level.Trial)
-    public void benchSetup(BenchmarkParams params) throws ProtoBufException {
+    public void benchSetup(BenchmarkParams params) throws ProtoException {
         testJSON = ProtoBuf.toByteArray(TestObject.createTestObject());
         TestObject obj = ProtoBuf.toObject(testJSON, TestObject.class);
         System.out.println("obj.field1=" + obj.field1);
@@ -42,7 +43,7 @@ public class DeserEdapProto {
     }
 
     @Test
-    public void test() throws IOException, ProtoBufException {
+    public void test() throws IOException, ProtoException {
         benchSetup(null);
         assertEquals(31415926, ProtoBuf.toObject(testJSON, TestObject.class).field1);
     }

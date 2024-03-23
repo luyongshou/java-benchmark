@@ -1,11 +1,11 @@
 package com.jsoniter.benchmark.with_10_string_fields;
 
 import com.jsoniter.benchmark.All;
-import io.edap.x.io.ByteArrayBufOut;
-import io.edap.x.json.JsonCodecRegister;
-import io.edap.x.json.JsonEncoder;
-import io.edap.x.json.JsonWriter;
-import io.edap.x.json.writer.ByteArrayJsonWriter;
+import io.edap.io.ByteArrayBufOut;
+import io.edap.json.JsonCodecRegister;
+import io.edap.json.JsonEncoder;
+import io.edap.json.JsonWriter;
+import io.edap.json.writer.ByteArrayJsonWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -28,7 +28,7 @@ public class SerEdapJson {
 
     private TestObject testObject;
     ByteArrayBufOut out;
-    JsonWriter jw;
+    JsonWriter writer;
     JsonEncoder encoder;
     private ByteArrayOutputStream byteArrayOutputStream;
 
@@ -36,12 +36,12 @@ public class SerEdapJson {
     public void benchSetup(BenchmarkParams params) {
         testObject = TestObject.createTestObject();
         out = new ByteArrayBufOut();
-        jw = new ByteArrayJsonWriter(out);
-        encoder = JsonCodecRegister.INSTANCE.getEncoder(TestObject.class);
+        writer = new ByteArrayJsonWriter(out);
+        encoder = JsonCodecRegister.instance().getEncoder(TestObject.class);
         byteArrayOutputStream = new ByteArrayOutputStream();
         //encoder = new TestObjectEncoder();
-        encoder.encode(jw, testObject);
-        int len = jw.size();
+        encoder.encode(writer, testObject);
+        int len = writer.size();
         byte[] bs = new byte[len];
         System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
         System.out.println("length=" + bs.length);
@@ -55,14 +55,11 @@ public class SerEdapJson {
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void ser(Blackhole bh) throws IOException {
         for (int i = 0; i < 1000; i++) {
-            jw.reset();
+            writer.reset();
             byteArrayOutputStream.reset();
-            encoder.encode(jw, testObject);
-//            jw.toStream(byteArrayOutputStream);
-//            bh.consume(byteArrayOutputStream);
-            int len = jw.size();
-            byte[] bs = new byte[len];
-            System.arraycopy(out.getWriteBuf().bs, 0, bs, 0, len);
+            encoder.encode(writer, testObject);
+            writer.toStream(byteArrayOutputStream);
+            bh.consume(byteArrayOutputStream);
 
         }
     }

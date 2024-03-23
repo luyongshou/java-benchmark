@@ -3,7 +3,7 @@ package com.jsoniter.benchmark.with_long_string;
 import com.jsoniter.benchmark.All;
 import io.edap.json.ByteArrayJsonReader;
 import io.edap.json.model.ByteArrayDataRange;
-import io.edap.x.protobuf.ProtoBuf;
+import io.edap.protobuf.ProtoBuf;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;

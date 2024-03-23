@@ -1,8 +1,8 @@
 package com.jsoniter.benchmark.with_long_string;
 
 import com.jsoniter.benchmark.All;
-import io.edap.x.protobuf.ProtoBuf;
-import io.edap.x.protobuf.ProtoBufWriter;
+import io.edap.protobuf.ProtoBuf;
+import io.edap.protobuf.ProtoBufWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -13,8 +13,8 @@ import org.openjdk.jmh.runner.RunnerException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static io.edap.x.util.StringUtil.IS_BYTE_ARRAY;
-import static io.edap.x.util.StringUtil.isLatin1;
+import static io.edap.util.StringUtil.IS_BYTE_ARRAY;
+import static io.edap.util.StringUtil.isLatin1;
 import static org.junit.Assert.assertEquals;
 
 /**

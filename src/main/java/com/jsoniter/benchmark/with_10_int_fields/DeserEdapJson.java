@@ -7,7 +7,7 @@ import io.edap.json.JsonCodecRegister;
 import io.edap.json.JsonDecoder;
 import io.edap.json.enums.DataType;
 import io.edap.json.model.ByteArrayDataRange;
-import io.edap.x.protobuf.ProtoBuf;
+import io.edap.protobuf.ProtoBuf;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;

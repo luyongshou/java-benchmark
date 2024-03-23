@@ -2,7 +2,7 @@ package com.jsoniter.benchmark.with_10_int_fields;
 
 import com.jsoniter.benchmark.All;
 import com.jsoniter.benchmark.with_5_string_fields.TestObject;
-import io.edap.x.protobuf.ProtoBuf;
+import io.edap.protobuf.ProtoBuf;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;

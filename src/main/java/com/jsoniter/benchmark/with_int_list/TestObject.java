@@ -2,8 +2,8 @@ package com.jsoniter.benchmark.with_int_list;
 
 import com.dslplatform.json.CompiledJson;
 import com.jsoniter.output.JsonStream;
-import io.edap.x.protobuf.annotation.ProtoField;
-import io.edap.x.protobuf.wire.Field;
+import io.edap.protobuf.annotation.ProtoField;
+import io.edap.protobuf.wire.Field;
 
 import java.util.Arrays;
 import java.util.List;

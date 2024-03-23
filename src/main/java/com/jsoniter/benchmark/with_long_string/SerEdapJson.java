@@ -1,11 +1,11 @@
 package com.jsoniter.benchmark.with_long_string;
 
 import com.jsoniter.benchmark.All;
-import io.edap.x.io.ByteArrayBufOut;
-import io.edap.x.json.JsonCodecRegister;
-import io.edap.x.json.JsonEncoder;
-import io.edap.x.json.JsonWriter;
-import io.edap.x.json.writer.ByteArrayJsonWriter;
+import io.edap.io.ByteArrayBufOut;
+import io.edap.json.JsonCodecRegister;
+import io.edap.json.JsonEncoder;
+import io.edap.json.JsonWriter;
+import io.edap.json.writer.ByteArrayJsonWriter;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -35,7 +35,7 @@ public class SerEdapJson {
         testObject = TestObject.createTestObject();
         out = new ByteArrayBufOut();
         jw = new ByteArrayJsonWriter(out);
-        encoder = JsonCodecRegister.INSTANCE.getEncoder(TestObject.class);
+        encoder = JsonCodecRegister.instance().getEncoder(TestObject.class);
         encoder.encode(jw, testObject);
         int len = jw.size();
         byte[] bs = new byte[len];
