@@ -2,6 +2,9 @@ package com.jsoniter.benchmark.with_map_field;
 
 import com.jsoniter.benchmark.All;
 import io.edap.protobuf.ProtoBuf;
+import io.edap.protobuf.ProtoBufCodecRegister;
+import io.edap.protobuf.ProtoBufDecoder;
+import io.edap.protobuf.reader.ByteArrayReader;
 import org.junit.Test;
 import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.*;
@@ -22,10 +25,14 @@ import static org.junit.Assert.assertEquals;
 public class DeserEdapProto {
 
     private byte[] testJSON;
+    ProtoBufDecoder<TestObject> decoder;
+    ByteArrayReader reader;
 
     @Setup(Level.Trial)
     public void benchSetup(BenchmarkParams params) {
         testJSON = ProtoBuf.toByteArray(TestObject.createTestObject());
+        decoder = ProtoBufCodecRegister.INSTANCE.getDecoder(TestObject.class);
+        reader = new ByteArrayReader(testJSON);
     }
 
     @Benchmark
@@ -33,7 +40,8 @@ public class DeserEdapProto {
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void deser(Blackhole bh) throws IOException {
         for (int i = 0; i < 1000; i++) {
-            bh.consume(ProtoBuf.toObject(testJSON, TestObject.class));
+            reader.reset();
+            bh.consume(decoder.decode(reader));
         }
     }
 
